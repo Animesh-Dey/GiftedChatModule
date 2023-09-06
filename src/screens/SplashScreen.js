@@ -1,12 +1,10 @@
 import {View, Text} from 'react-native';
-import React, {useCallback} from 'react';
+import React from 'react';
 import auth from '@react-native-firebase/auth';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const [user, setUser] = React.useState('');
-
   React.useEffect(() => {
     const userCheck = auth().onAuthStateChanged(userExist => {
       console.log(userExist);
@@ -29,7 +27,7 @@ const SplashScreen = () => {
     return () => {
       userCheck();
     };
-  }, []);
+  });
   return (
     <View>
       <Text>SplashScreen</Text>
