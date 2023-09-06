@@ -1,13 +1,32 @@
-import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import auth from '@react-native-firebase/auth';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+
+  const userSignin = async () => {
+    if (!email || !password) {
+      alert('Please fill out the empty fields');
+    }
+    try {
+      const newReg = await auth().signInWithEmailAndPassword(email, password);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: 'Home'}],
+        }),
+      );
+      console.log('Sign in done');
+      return newReg;
+    } catch (err) {
+      alert('Email or Password incorrect');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +46,7 @@ const LoginScreen = () => {
         secureTextEntry
       />
       <View style={{width: '100%'}}>
-        <Button title="Sign in" style={styles.button} />
+        <Button title="Sign in" style={styles.button} onPress={userSignin} />
         <View style={{height: 10}} />
         <Button
           title="Register"
