@@ -2,11 +2,13 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {FlatList} from 'react-native-gesture-handler';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 const Home = ({route}) => {
   const [users, setUsers] = useState([]);
   const [useDetails, setUserDetails] = useState(null);
   console.log(route.params.user, 'route');
+  const navigation = useNavigation();
 
   const fetchUserDetails = async () => {
     const querySanp = await firestore()
@@ -49,6 +51,12 @@ const Home = ({route}) => {
             console.log(item);
             return (
               <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Chat', {
+                    user: item,
+                    uid: route.params.user,
+                  });
+                }}
                 style={{paddingHorizontal: 12, paddingVertical: 12}}>
                 <Text style={{color: 'black'}}>{item.name}</Text>
                 <Text style={{color: 'black'}}>{item.email}</Text>
