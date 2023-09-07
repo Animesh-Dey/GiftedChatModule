@@ -12,7 +12,14 @@ const SplashScreen = () => {
         navigation.dispatch(
           CommonActions.reset({
             index: 1,
-            routes: [{name: 'Home'}],
+            routes: [
+              {
+                name: 'Home',
+                params: {
+                  user: userExist.uid,
+                },
+              },
+            ],
           }),
         );
       } else {

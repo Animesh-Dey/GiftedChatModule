@@ -29,7 +29,14 @@ const RegisterScreen = () => {
       Navigator.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{name: 'Home'}],
+          routes: [
+            {
+              name: 'Home',
+              params: {
+                user: newReg.user.uid,
+              },
+            },
+          ],
         }),
       );
     } catch (err) {

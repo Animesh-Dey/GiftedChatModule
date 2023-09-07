@@ -18,7 +18,14 @@ const LoginScreen = () => {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{name: 'Home'}],
+          routes: [
+            {
+              name: 'Home',
+              params: {
+                user: newReg.user.uid,
+              },
+            },
+          ],
         }),
       );
       console.log('Sign in done');
